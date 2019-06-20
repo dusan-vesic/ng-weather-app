@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NbSearchService } from '@nebular/theme';
 import { CityStore } from './city-store';
+import { RefreshService } from './refresh.service';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,8 @@ export class AppComponent {
 
   constructor(
     private searchService: NbSearchService,
-    private cityStore: CityStore
+    private cityStore: CityStore,
+    private refresh: RefreshService
   ) {
     this.searchService.onSearchSubmit()
       .subscribe((data: any) => {
@@ -22,5 +24,6 @@ export class AppComponent {
 
     // test store
     console.log(this.cityStore.cities);
+    // this.refresh.setup(1)
   }
 }
