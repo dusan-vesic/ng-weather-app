@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-sidebar',
   template: `
-    <div>Sidebar</div>
+    <app-city-list></app-city-list>
   `,
   styles: []
 })
