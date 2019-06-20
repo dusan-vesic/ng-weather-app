@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NbSearchService } from '@nebular/theme';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'ng-weather-app';
+  value = '';
+
+  constructor(
+    private searchService: NbSearchService
+  ) {
+    this.searchService.onSearchSubmit()
+      .subscribe((data: any) => {
+        this.value = data.term;
+        console.log(this.value);
+      });
+  }
 }
