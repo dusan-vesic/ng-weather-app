@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NbSearchService } from '@nebular/theme';
+import { CityStore } from './city-store';
 
 @Component({
   selector: 'app-root',
@@ -10,12 +11,16 @@ export class AppComponent {
   value = '';
 
   constructor(
-    private searchService: NbSearchService
+    private searchService: NbSearchService,
+    private cityStore: CityStore
   ) {
     this.searchService.onSearchSubmit()
       .subscribe((data: any) => {
         this.value = data.term;
         console.log(this.value);
       });
+
+    // test store
+    console.log(this.cityStore.cities);
   }
 }
