@@ -11,6 +11,7 @@ import {
   NbCardModule,
   NbSidebarModule
 } from '@nebular/theme';
+import { SidebarModule } from './sidebar/sidebar.module';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import {
     NbSearchModule,
     NbCardModule,
     NbSidebarModule.forRoot(),
+    SidebarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
