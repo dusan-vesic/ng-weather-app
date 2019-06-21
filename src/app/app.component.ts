@@ -3,6 +3,7 @@ import { NbSearchService } from '@nebular/theme';
 import { CityStore, City } from './lib/city-store';
 import { RefreshService } from './lib/refresh.service';
 import { WeatherService } from './lib/weather.service';
+import { normalize } from '../app/utils/helpers';
 
 export interface Weather {
   name: string;
@@ -27,13 +28,10 @@ export class AppComponent implements OnInit {
     private weatherService: WeatherService
   ) {
     this.searchService.onSearchSubmit()
-      .subscribe((data: any) => {
+      .subscribe(({ term }) => {
         this.cityStore.add({
-          name: data.term
+          name: normalize(term)
         });
-
-        this.getWeather(data.term);
-
       });
 
     // test store
