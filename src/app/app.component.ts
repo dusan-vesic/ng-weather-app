@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NbSearchService } from '@nebular/theme';
-import { CityStore, City } from './city-store';
-import { RefreshService } from './refresh.service';
+import { CityStore, City } from './lib/city-store';
+import { RefreshService } from './lib/refresh.service';
 
 @Component({
   selector: 'app-root',
@@ -29,7 +29,9 @@ export class AppComponent {
     // this.refresh.setup(1)
     this.cityStore.data
       .subscribe((city: City) => {
-        this.value = city.name;
+        if (city) {
+          this.value = city.name;
+        }
       });
   }
 
