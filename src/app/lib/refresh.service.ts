@@ -7,13 +7,10 @@ export class RefreshService {
 
   constructor() { }
 
-  setup(interval: number) /* interval in sec */ {
+  setup(interval: number, fn: () => void) /* interval in sec */ {
     setInterval(() => {
-      this.run();
+      fn();
     }, interval * 1000);
   }
 
-  run() {
-    console.log('exec');
-  }
 }

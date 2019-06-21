@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NbSearchService } from '@nebular/theme';
-import { CityStore, City } from './lib/city-store.service';
+import { CityStore } from './lib/city-store.service';
 import { RefreshService } from './lib/refresh.service';
 import { WeatherService } from './lib/weather.service';
 import { normalize } from '../app/utils/helpers';
+import { City } from './models/city';
 
 export interface Weather {
   name: string;
@@ -29,15 +30,10 @@ export class AppComponent implements OnInit {
   ) {
     this.searchService.onSearchSubmit()
       .subscribe(({ term }) => {
-        this.cityStore.add({
-          name: normalize(term)
-        });
+        this.getWeather(normalize(term))
       });
 
-    // test store
-    // console.log(this.cityStore.cities);
-    // this.refresh.setup(1)
-    this.cityStore.data
+    this.cityStore.search
       .subscribe((city: City) => {
         if (city) {
           this.getWeather(city.name);
@@ -54,14 +50,15 @@ export class AppComponent implements OnInit {
     // http://openweathermap.org/img/w/10d.png
     this.loading = true;
     this.weatherService.getWeather(city)
-    .subscribe(w => {
-      const { name, main, weather } = w as any;
-      this.weather = {
-        name,
-        temp: main.temp,
-        main: weather[0].main
-      };
-      this.loading = false;
-    });
+      .subscribe(w => {
+        const { name, main, weather } = w as any;
+        this.weather = {
+          name,
+          temp: main.temp,
+          main: weather[0].main
+        };
+        this.cityStore.add(this.weather);
+        this.loading = false;
+      });
   }
 }

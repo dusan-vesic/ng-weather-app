@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { CityStore, City } from 'src/app/lib/city-store.service';
+import { CityStore } from 'src/app/lib/city-store.service';
+import { City } from 'src/app/models/city';
 
 @Component({
   selector: 'app-city',
@@ -8,8 +9,7 @@ import { CityStore, City } from 'src/app/lib/city-store.service';
       <nb-card-body>
         <div (click)="onSelect(city)" class="city-wrapper">
           <span>{{city.name}}</span>
-          <span>1</span>
-          <span>1</span>
+          <span>{{ city.temp || 'n/a'}} </span>
           <nb-icon
             status="danger"
             (click)="onDelete($event, city)"

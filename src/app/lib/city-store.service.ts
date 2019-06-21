@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, forkJoin } from 'rxjs';
 import { LocalStorageService } from './local-storage.service';
-
-export interface City {
-  name: string;
-}
+import { City } from '../models/city';
+import { WeatherService } from './weather.service';
+import { RefreshService } from './refresh.service';
 
 const mock: City[] = [{
   name: 'Boston'
 }, {
-  name: 'Washington'
+  name: 'New York'
 }, {
   name: 'Portland'
 }];
@@ -22,11 +21,13 @@ export class CityStore {
   cities: City[];
   cities$ = new BehaviorSubject<City[]>([]);
 
-  private dataSource = new BehaviorSubject<City>(null);
-  data = this.dataSource.asObservable();
+  private searchSource = new BehaviorSubject<City>(null);
+  search = this.searchSource.asObservable();
 
   constructor(
-    private localStorage: LocalStorageService
+    private localStorage: LocalStorageService,
+    private weatherService: WeatherService,
+    private refresh: RefreshService
   ) {
     if (this.localStorage.get('cities')) {
       this.cities = this.localStorage.get('cities');
@@ -36,6 +37,13 @@ export class CityStore {
       this.localStorage.set('cities', this.cities);
       this.cities$.next(this.cities);
     }
+
+    this.setupWeatherData();
+
+    // refresh sidebar weather
+    // this.refresh.setup(
+    //   3, this.setupWeatherData.bind(this)
+    // )
   }
 
   add(city: City): boolean | void {
@@ -60,6 +68,21 @@ export class CityStore {
   }
 
   updatedDataSelection(data: City): void {
-    this.dataSource.next(data);
+    this.searchSource.next(data);
+  }
+
+  setupWeatherData() {
+    forkJoin(
+      this.cities.map(city => this.weatherService.getWeather(city.name))
+    ).subscribe(res => {
+      this.cities = res.map((city: any) => {
+        return {
+          name: city.name,
+          temp: city.main.temp,
+          main: city.weather[0].main
+        };
+      });
+      this.cities$.next(this.cities);
+    });
   }
 }

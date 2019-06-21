@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CityStore, City } from 'src/app/lib/city-store.service';
+import { CityStore } from 'src/app/lib/city-store.service';
 import { Observable } from 'rxjs';
+import { City } from 'src/app/models/city';
 
 @Component({
   selector: 'app-city-list',
