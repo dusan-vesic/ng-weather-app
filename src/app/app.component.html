@@ -8,23 +8,20 @@
   </nb-sidebar>
 
   <nb-layout-column class="colored-column-basic">
-    <nb-card [nbSpinner]="loading" nbSpinnerStatus="primary" accent="info" *ngIf="weather; else empty_search">
+    <nb-card [nbSpinner]="loading" nbSpinnerStatus="primary" accent="info" *ngIf="city; else empty_search">
       <nb-card-header>
-        Weather for - {{ weather.name }}
+        Weather in {{ city.name }}
       </nb-card-header>
       <nb-card-body>
-        <div>
-          <span>{{ weather.temp | number:'1.0-0'}}&#8451;</span>
-        </div>
-        <div>
-          {{ weather.main }}
-        </div>
+        <h1>{{ city.temp | number:'1.0-0'}}&#8451;</h1>
+        <div><img [src]="city.icon" /></div>
+        <h4>{{ city.main }}</h4>
       </nb-card-body>
     </nb-card>
     <ng-template #empty_search>
       <nb-card>
         <nb-card-body>
-          No data
+          <h2>{{ message }}</h2>
         </nb-card-body>
       </nb-card>
     </ng-template>

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NbSearchService } from '@nebular/theme';
 import { CityStore } from './lib/city-store.service';
-import { RefreshService } from './lib/refresh.service';
 import { WeatherService } from './lib/weather.service';
 import { normalize } from '../app/utils/helpers';
 import { City } from './models/city';
@@ -13,18 +12,18 @@ import { City } from './models/city';
 })
 export class AppComponent implements OnInit {
 
-  weather: City;
+  city: City;
   loading: boolean;
+  message = 'No Data';
 
   constructor(
     private searchService: NbSearchService,
     private cityStore: CityStore,
-    private refresh: RefreshService,
     private weatherService: WeatherService
   ) {
     this.searchService.onSearchSubmit()
       .subscribe(({ term }) => {
-        this.getWeather(normalize(term))
+        this.getWeather(normalize(term));
       });
 
     this.cityStore.search
@@ -35,23 +34,28 @@ export class AppComponent implements OnInit {
       });
   }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() { }
 
   getWeather(city: string): void {
     this.loading = true;
     this.weatherService.getWeather(city)
-      .subscribe(w => {
-        const { name, main, weather } = w as any;
-        this.weather = {
+      .subscribe(res => {
+        const { name, main, weather } = res as any;
+        this.city = {
           name,
           temp: main.temp,
           main: weather[0].main,
           icon: 'http://openweathermap.org/img/w/' + weather[0].icon + '.png'
         };
-        this.cityStore.add(this.weather);
+        this.cityStore.add(this.city);
         this.loading = false;
+      }, (error) => {
+        if (error.status === 404) {
+          // alert(error.statusText);
+          this.city = null;
+          this.message = error.statusText;
+          this.loading = false;
+        }
       });
   }
 }

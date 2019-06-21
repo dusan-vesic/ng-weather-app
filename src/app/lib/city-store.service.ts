@@ -13,6 +13,8 @@ const mock: City[] = [{
   name: 'Portland'
 }];
 
+const CITIES = 'cities';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -29,21 +31,21 @@ export class CityStore {
     private weatherService: WeatherService,
     private refresh: RefreshService
   ) {
-    if (this.localStorage.get('cities')) {
-      this.cities = this.localStorage.get('cities');
+    if (this.localStorage.get(CITIES)) {
+      this.cities = this.localStorage.get(CITIES);
       this.cities$.next(this.cities);
     } else {
       this.cities = mock;
-      this.localStorage.set('cities', this.cities);
+      this.localStorage.set(CITIES, this.cities);
       this.cities$.next(this.cities);
     }
 
     this.setupWeatherData();
 
     // refresh sidebar weather
-    // this.refresh.setup(
-    //   3, this.setupWeatherData.bind(this)
-    // )
+    this.refresh.setup(
+      60, this.setupWeatherData.bind(this)
+    );
   }
 
   add(city: City): boolean | void {
@@ -51,12 +53,12 @@ export class CityStore {
     if (dup) { return false; }
 
     this.cities = [
-      ...this.cities, city
+      city, ...this.cities
     ];
 
     this.updatedDataSelection(city);
     this.cities$.next(this.cities);
-    this.localStorage.set('cities', this.cities);
+    this.localStorage.set(CITIES, this.cities);
   }
 
   remove(city: City): void {
@@ -64,7 +66,7 @@ export class CityStore {
       elm => elm.name !== city.name
     );
     this.cities$.next(this.cities);
-    this.localStorage.set('cities', this.cities);
+    this.localStorage.set(CITIES, this.cities);
   }
 
   updatedDataSelection(data: City): void {
@@ -83,7 +85,7 @@ export class CityStore {
           icon: 'http://openweathermap.org/img/w/' + city.weather[0].icon + '.png'
         };
       });
-      this.localStorage.set('cities', this.cities);
+      this.localStorage.set(CITIES, this.cities);
       this.cities$.next(this.cities);
     });
   }
