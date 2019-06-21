@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NbSearchService } from '@nebular/theme';
-import { CityStore } from './city-store';
+import { CityStore, City } from './city-store';
 import { RefreshService } from './refresh.service';
 
 @Component({
@@ -23,7 +23,11 @@ export class AppComponent {
       });
 
     // test store
-    console.log(this.cityStore.cities);
+    // console.log(this.cityStore.cities);
     // this.refresh.setup(1)
+    this.cityStore.data
+      .subscribe((city: City) => {
+        console.log('selected', city);
+      })
   }
 }

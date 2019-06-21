@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { CityStore, City } from 'src/app/city-store';
 
 @Component({
   selector: 'app-city',
   template: `
     <nb-card>
       <nb-card-body>
-        <div class="city-wrapper">
-          <span>city name</span>
+        <div (click)="onSelect(city)" class="city-wrapper">
+          <span>{{city.name}}</span>
           <span>1</span>
           <span>1</span>
         </div>
@@ -22,9 +23,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CityComponent implements OnInit {
 
-  constructor() { }
+  @Input() city: City;
+
+  constructor(
+    private cityStore: CityStore
+  ) { }
 
   ngOnInit() {
+
+  }
+
+  onSelect(city: City) {
+    this.cityStore.updatedDataSelection(city);
   }
 
 }

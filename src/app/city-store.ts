@@ -1,26 +1,41 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 
-interface City {
+export interface City {
   name: string;
 }
+
+let cities: City[] = [{
+  name: 'Boston'
+}, {
+  name: 'Washington'
+}, {
+  name: 'Portland'
+}];
 
 @Injectable({
   providedIn: 'root'
 })
 export class CityStore {
-  cities: City[] = [{
-    name: 'Boston'
-  }, {
-    name: 'Washington'
-  }, {
-    name: 'Portland'
-  }];
+
+  private dataSource = new BehaviorSubject<City>({ name: null });
+  data = this.dataSource.asObservable();
 
   constructor() { }
 
-  add(city: City) {
-    this.cities = [
-      ...this.cities, city
+  add(city: City): Observable<City[]> {
+    cities = [
+      ...cities, city
     ];
+
+    return of(cities);
+  }
+
+  getAll(): Observable<City[]> {
+    return of(cities);
+  }
+
+  updatedDataSelection(data: City) {
+    this.dataSource.next(data);
   }
 }
