@@ -8,20 +8,18 @@
   </nb-sidebar>
 
   <nb-layout-column class="colored-column-basic">
-    <nb-card accent="success" *ngIf="value; else empty_search">
+    <nb-card [nbSpinner]="loading" nbSpinnerStatus="primary" accent="success" *ngIf="weather; else empty_search">
       <nb-card-header>
-        {{ value }}
+        {{ weather.name }}
       </nb-card-header>
       <nb-card-body>
-        A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases.
-        Originally, nebula was a name for any diffuse astronomical object,
-        including galaxies beyond the Milky Way.
+        &#8451; {{ weather.temp }} - {{ weather.main }}
       </nb-card-body>
     </nb-card>
     <ng-template #empty_search>
-        <nb-card status="info">
-            <nb-card-header>Search</nb-card-header>
-          </nb-card>
+      <nb-card status="info">
+        <nb-card-header>Search</nb-card-header>
+      </nb-card>
     </ng-template>
   </nb-layout-column>
 </nb-layout>
