@@ -6,12 +6,6 @@ import { WeatherService } from './lib/weather.service';
 import { normalize } from '../app/utils/helpers';
 import { City } from './models/city';
 
-export interface Weather {
-  name: string;
-  temp: number;
-  main: string;
-}
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -19,7 +13,7 @@ export interface Weather {
 })
 export class AppComponent implements OnInit {
 
-  weather: Weather;
+  weather: City;
   loading: boolean;
 
   constructor(
@@ -46,8 +40,6 @@ export class AppComponent implements OnInit {
   }
 
   getWeather(city: string): void {
-    // todo: add icon url
-    // http://openweathermap.org/img/w/10d.png
     this.loading = true;
     this.weatherService.getWeather(city)
       .subscribe(w => {
@@ -55,7 +47,8 @@ export class AppComponent implements OnInit {
         this.weather = {
           name,
           temp: main.temp,
-          main: weather[0].main
+          main: weather[0].main,
+          icon: 'http://openweathermap.org/img/w/' + weather[0].icon + '.png'
         };
         this.cityStore.add(this.weather);
         this.loading = false;

@@ -79,9 +79,11 @@ export class CityStore {
         return {
           name: city.name,
           temp: city.main.temp,
-          main: city.weather[0].main
+          main: city.weather[0].main,
+          icon: 'http://openweathermap.org/img/w/' + city.weather[0].icon + '.png'
         };
       });
+      this.localStorage.set('cities', this.cities);
       this.cities$.next(this.cities);
     });
   }
