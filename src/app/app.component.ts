@@ -9,6 +9,7 @@ import { RefreshService } from './refresh.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+
   value = '';
 
   constructor(
@@ -18,8 +19,9 @@ export class AppComponent {
   ) {
     this.searchService.onSearchSubmit()
       .subscribe((data: any) => {
-        this.value = data.term;
-        console.log(this.value);
+        this.cityStore.add({
+          name: data.term
+        });
       });
 
     // test store
@@ -27,7 +29,8 @@ export class AppComponent {
     // this.refresh.setup(1)
     this.cityStore.data
       .subscribe((city: City) => {
-        console.log('selected', city);
-      })
+        this.value = city.name;
+      });
   }
+
 }

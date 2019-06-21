@@ -15,6 +15,9 @@ import { CityStore, City } from 'src/app/city-store';
     </nb-card>
   `,
   styles: [`
+    nb-card-body:hover {
+      cursor: pointer
+    }
     .city-wrapper {
       display: flex;
       justify-content: space-between;

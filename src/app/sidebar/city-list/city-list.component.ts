@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-city-list',
   template: `
-    <div *ngFor="let city of cities | async">
+    <div *ngFor="let city of cities$ | async">
       <app-city [city]="city"></app-city>
     </div>
   `,
@@ -13,14 +13,14 @@ import { Observable } from 'rxjs';
 })
 export class CityListComponent implements OnInit {
 
-  cities: Observable<City[]>;
+  cities$: Observable<City[]>;
 
   constructor(
     private cityStore: CityStore
-  ) {}
+  ) { }
 
   ngOnInit() {
-    this.cities = this.cityStore.getAll();
+    this.cities$ = this.cityStore.cities$;
   }
 
 }
