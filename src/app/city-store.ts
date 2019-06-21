@@ -27,18 +27,25 @@ export class CityStore {
   }
 
   add(city: City): boolean | void {
-    const dup = this.cities.find(e => Object.is(e.name, city.name))
+    const dup = this.cities.find(e => Object.is(e.name, city.name));
     if (dup) { return false; }
 
     this.cities = [
       ...this.cities, city
     ];
 
-    this.updatedDataSelection(city)
+    this.updatedDataSelection(city);
     this.cities$.next(this.cities);
   }
 
-  updatedDataSelection(data: City) {
+  remove(city: City): void {
+    this.cities = this.cities.filter(
+      elm => elm.name !== city.name
+    );
+    this.cities$.next(this.cities);
+  }
+
+  updatedDataSelection(data: City): void {
     this.dataSource.next(data);
   }
 }

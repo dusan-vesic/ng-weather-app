@@ -10,6 +10,11 @@ import { CityStore, City } from 'src/app/city-store';
           <span>{{city.name}}</span>
           <span>1</span>
           <span>1</span>
+          <nb-icon
+            status="danger"
+            (click)="onDelete($event, city)"
+            icon="trash">
+          </nb-icon>
         </div>
       </nb-card-body>
     </nb-card>
@@ -36,8 +41,12 @@ export class CityComponent implements OnInit {
 
   }
 
-  onSelect(city: City) {
+  onSelect(city: City): void {
     this.cityStore.updatedDataSelection(city);
   }
 
+  onDelete(event: MouseEvent, city: City): void {
+    event.stopPropagation();
+    this.cityStore.remove(city);
+  }
 }
