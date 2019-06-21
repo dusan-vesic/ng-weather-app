@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NbSearchService } from '@nebular/theme';
-import { CityStore, City } from './lib/city-store';
+import { CityStore, City } from './lib/city-store.service';
 import { RefreshService } from './lib/refresh.service';
 import { WeatherService } from './lib/weather.service';
 import { normalize } from '../app/utils/helpers';

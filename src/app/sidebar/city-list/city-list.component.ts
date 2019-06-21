@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CityStore, City } from 'src/app/lib/city-store';
+import { CityStore, City } from 'src/app/lib/city-store.service';
 import { Observable } from 'rxjs';
 
 @Component({
