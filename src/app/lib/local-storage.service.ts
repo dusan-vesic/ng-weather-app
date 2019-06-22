@@ -5,9 +5,6 @@ import { City } from '../models/city';
   providedIn: 'root'
 })
 export class LocalStorageService {
-
-  constructor() { }
-
   set(key: string, data: any): void {
     try {
       localStorage.setItem(key, JSON.stringify(data));

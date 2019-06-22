@@ -19,10 +19,8 @@ const CITIES = 'cities';
   providedIn: 'root'
 })
 export class CityStore {
-
   cities: City[];
   cities$ = new BehaviorSubject<City[]>([]);
-
   private searchSource = new BehaviorSubject<City>(null);
   search = this.searchSource.asObservable();
 
@@ -77,12 +75,12 @@ export class CityStore {
     forkJoin(
       this.cities.map(city => this.weatherService.getWeather(city.name))
     ).subscribe(res => {
-      this.cities = res.map((city: any) => {
+      this.cities = res.map(data => {
+        const { name, main, weather } = data as any;
         return {
-          name: city.name,
-          temp: city.main.temp,
-          main: city.weather[0].main,
-          icon: 'http://openweathermap.org/img/w/' + city.weather[0].icon + '.png'
+          name,
+          main,
+          weather: weather[0]
         };
       });
       this.localStorage.set(CITIES, this.cities);

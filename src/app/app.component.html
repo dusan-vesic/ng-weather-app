@@ -7,15 +7,40 @@
     <app-sidebar></app-sidebar>
   </nb-sidebar>
 
-  <nb-layout-column class="colored-column-basic">
-    <nb-card [nbSpinner]="loading" nbSpinnerStatus="primary" accent="info" *ngIf="city; else empty_search">
-      <nb-card-header>
-        Weather in {{ city.name }}
+  <nb-layout-column class="colored-column-basic" [nbSpinner]="loading" nbSpinnerStatus="primary">
+    <nb-card accent="info" *ngIf="city; else empty_search">
+      <nb-card-header style="text-align: center">
+        {{ city.name}}
       </nb-card-header>
       <nb-card-body>
-        <h1>{{ city.temp | number:'1.0-0'}}&#8451;</h1>
-        <div><img [src]="city.icon" /></div>
-        <h4>{{ city.main }}</h4>
+        <div class="align">
+          <h1>{{ city.main.temp | number:'1.0-0'}}&#8451;</h1>
+          <div><img [src]="city.weather.icon|buildIconUrl" /></div>
+          <h1>{{ city.weather.main }}</h1>
+        </div>
+
+        <div class="align">
+          <div>
+            <div>Pressure</div>
+            <div>{{ city.main.pressure }}</div>
+          </div>
+          <div>
+            <div>Humidity</div>
+            <div>{{ city.main.humidity }}</div>
+          </div>
+          <div>
+            <div>Min</div>
+            <div>{{ city.main.temp_min | number:'1.0-0' }}&#8451;</div>
+          </div>
+          <div>
+            <div>Max</div>
+            <div>{{ city.main.temp_max | number:'1.0-0' }}&#8451;</div>
+          </div>
+        </div>
+
+        <div class="align">
+          <h3>{{ city.weather.description }}</h3>
+        </div>
       </nb-card-body>
     </nb-card>
     <ng-template #empty_search>

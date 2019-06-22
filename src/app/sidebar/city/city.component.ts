@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CityStore } from 'src/app/lib/city-store.service';
 import { City } from 'src/app/models/city';
+import { buildIconUrl } from '../../utils/helpers';
 
 @Component({
   selector: 'app-city',
@@ -11,7 +12,7 @@ import { City } from 'src/app/models/city';
           <div class="wrapper">
             <span>{{city.name}}</span>
             <span>
-              {{ city.temp | number:'1.0-0'}}
+              {{ city.main.temp | number:'1.0-0'}}
               <span style="font-size: 10px;">&#8451;</span>
             </span>
             <nb-icon
@@ -22,8 +23,8 @@ import { City } from 'src/app/models/city';
             </nb-icon>
           </div>
           <div class="wrapper">
-            <img [src]="city.icon" width="30" />
-            <span>{{ city.main }}</span>
+            <img [src]="icon" width="30" />
+            <span>{{ city.main.temp }}</span>
           </div>
         </div>
       </nb-card-body>
@@ -41,15 +42,14 @@ import { City } from 'src/app/models/city';
   `]
 })
 export class CityComponent implements OnInit {
-
   @Input() city: City;
 
-  constructor(
-    private cityStore: CityStore
-  ) { }
+  icon = ''; /* todo: pipe this */
+
+  constructor(private cityStore: CityStore) { }
 
   ngOnInit() {
-
+    this.icon = buildIconUrl(this.city.weather.icon);
   }
 
   onSelect(city: City): void {

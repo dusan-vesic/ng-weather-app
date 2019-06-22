@@ -14,10 +14,12 @@ import {
   NbSpinnerModule
 } from '@nebular/theme';
 import { SidebarModule } from './sidebar/sidebar.module';
+import { BuildIconUrl } from './pipes/build-icon-url.pipe';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    BuildIconUrl
   ],
   imports: [
     BrowserModule,

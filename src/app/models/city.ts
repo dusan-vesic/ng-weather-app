@@ -1,6 +1,15 @@
 export interface City {
   name: string;
-  temp?: number;
-  main?: string;
-  icon?: string;
+  main?: {
+    temp: number;
+    pressure: number;
+    humidity: number;
+    temp_min: number;
+    temp_max: number;
+  };
+  weather?: {
+    main: string,
+    description: string,
+    icon: string
+  };
 }

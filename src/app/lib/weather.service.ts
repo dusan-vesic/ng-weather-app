@@ -12,7 +12,6 @@ enum Units {
   providedIn: 'root'
 })
 export class WeatherService {
-
   base = 'http://api.openweathermap.org/data/2.5/weather?q=';
   key = environment.API_KEY;
 
@@ -22,5 +21,4 @@ export class WeatherService {
     const url = `${this.base}${city}&units=${units}&appid=${this.key}`;
     return this.http.get(url);
   }
-
 }
