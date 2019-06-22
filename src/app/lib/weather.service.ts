@@ -12,7 +12,7 @@ enum Units {
   providedIn: 'root'
 })
 export class WeatherService {
-  base = 'http://api.openweathermap.org/data/2.5/weather?q=';
+  base = 'https://api.openweathermap.org/data/2.5/weather?q=';
   key = environment.API_KEY;
 
   constructor(private http: HttpClient) { }

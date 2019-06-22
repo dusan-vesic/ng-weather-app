@@ -6,5 +6,5 @@ export const normalize = (name: string): string => {
 };
 
 export const buildIconUrl = (icon: string): string => {
-  return `http://openweathermap.org/img/w/${icon}.png`;
+  return `https://openweathermap.org/img/w/${icon}.png`;
 };
