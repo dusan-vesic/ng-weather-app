@@ -14,12 +14,11 @@ import {
   NbSpinnerModule
 } from '@nebular/theme';
 import { SidebarModule } from './sidebar/sidebar.module';
-import { BuildIconUrl } from './pipes/build-icon-url.pipe';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    BuildIconUrl
   ],
   imports: [
     BrowserModule,
@@ -34,6 +33,7 @@ import { BuildIconUrl } from './pipes/build-icon-url.pipe';
     NbSidebarModule.forRoot(),
     SidebarModule,
     NbSpinnerModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -5,6 +5,7 @@ import { CityListComponent } from './city-list/city-list.component';
 import { CityComponent } from './city/city.component';
 import { NbCardModule, NbIconModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [SidebarComponent, CityListComponent, CityComponent],
@@ -12,7 +13,8 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
     CommonModule,
     NbCardModule,
     NbEvaIconsModule,
-    NbIconModule
+    NbIconModule,
+    SharedModule
   ],
   exports: [
     SidebarComponent

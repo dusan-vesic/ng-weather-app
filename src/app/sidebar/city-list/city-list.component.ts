@@ -9,19 +9,14 @@ import { City } from 'src/app/models/city';
     <div *ngFor="let city of cities$ | async">
       <app-city [city]="city"></app-city>
     </div>
-  `,
-  styles: []
+  `
 })
 export class CityListComponent implements OnInit {
-
   cities$: Observable<City[]>;
 
-  constructor(
-    private cityStore: CityStore
-  ) { }
+  constructor(private cityStore: CityStore) { }
 
   ngOnInit() {
     this.cities$ = this.cityStore.cities$;
   }
-
 }
